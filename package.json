@@ -1,0 +1,31 @@
+{
+  "name": "highlightjs-supercollider",
+  "version": "1.0.0",
+  "description": "highlight.js syntax definition for the Supercollider language",
+  "main": "supercollider.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "files": [
+    "supercollider.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/highlightjs/highlightjs-supercollider.git"
+  },
+  "keywords": [
+    "supercollider",
+    "highlight.js",
+    "highlightjs",
+    "syntax"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WinOpsDBA/highlightjs-supercollider/issues"
+  },
+  "homepage": "https://github.com/highlightjs/highlightjs-supercollider#readme",
+  "devDependencies": {
+    "highlight.js": "^9.15.9",
+    "jasmine": "^3.4.0"
+  }
+}
