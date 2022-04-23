@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/highlightjs/highlightjs-supercollider#readme",
   "devDependencies": {
-    "highlight.js": "^9.15.9",
+    "highlight.js": "^11.5.1",
     "jasmine": "^3.4.0"
   }
 }
