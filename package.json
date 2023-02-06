@@ -1,31 +1,27 @@
 {
-  "name": "highlightjs-supercollider",
-  "version": "1.0.0",
-  "description": "highlight.js syntax definition for the Supercollider language",
-  "main": "supercollider.js",
+  "name": "highlightjs-sclang",
+  "version": "0.1.0",
+  "description": "sclang syntax highlighting plugin for highlight.js",
+  "main": "src/sclang.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "mocha"
   },
-  "files": [
-    "supercollider.js"
-  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/highlightjs/highlightjs-supercollider.git"
+    "url": "git+https://github.com/highlightjs/highlightjs-cypher.git"
   },
   "keywords": [
+    "sclang",
     "supercollider",
-    "highlight.js",
+    "hljs",
     "highlightjs",
-    "syntax"
+    "highlight.js"
   ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/WinOpsDBA/highlightjs-supercollider/issues"
-  },
-  "homepage": "https://github.com/highlightjs/highlightjs-supercollider#readme",
+  "author": "Dennis Scheiba",
+  "license": "GPL-2.0",
   "devDependencies": {
-    "highlight.js": "^9.15.9",
-    "jasmine": "^3.4.0"
+    "highlight.js": "^11.7.0",
+    "mocha": "^10.2.0",
+    "should": "^13.2.3"
   }
 }

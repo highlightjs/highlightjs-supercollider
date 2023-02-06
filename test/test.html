@@ -1,0 +1,31 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+    <script src="../dist/sclang.min.js"></script>
+    <script type="text/javascript">
+        hljs.highlightAll();
+    </script>
+</head>
+
+<body>
+    <pre>
+    <code class="language-sclang">
+        s.boot;
+
+        Ndef(\mySound, {
+            // some comment
+            var sig = SinOsc.ar(
+                freq: \freq.kr(200.0)
+            ) * \amp.kr(0.2);
+            sig;
+        }).play;
+
+        \symbol_Foo
+    </code>
+    </pre>
+</body>
+
+</html>
