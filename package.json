@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/highlightjs/highlightjs-cypher.git"
+    "url": "git+https://github.com/highlightjs/highlightjs-supercollider.git"
   },
   "keywords": [
     "sclang",
@@ -18,7 +18,11 @@
     "highlight.js"
   ],
   "author": "Dennis Scheiba",
-  "license": "GPL-2.0",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WinOpsDBA/highlightjs-supercollider/issues"
+  },
+  "homepage": "https://github.com/highlightjs/highlightjs-supercollider#readme",
   "devDependencies": {
     "highlight.js": "^11.7.0",
     "mocha": "^10.2.0",
