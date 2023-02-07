@@ -56,7 +56,8 @@ module.exports = function (hljs) {
   );
 
   return {
-    aliases: ["supercollider", "sc", "sclang"],
+    aliases: ["supercollider", "sc"],
+    name: "sclang",
     keywords: KEYWORDS,
     contains: [
       {
