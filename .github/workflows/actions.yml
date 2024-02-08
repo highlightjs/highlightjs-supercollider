@@ -15,4 +15,4 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: make docker-test
+      - run: make test-docker
