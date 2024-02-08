@@ -12,7 +12,8 @@ Simply include the Highlight.js library in your webpage or Node app, then load t
 
 ### Static website or simple usage
 
-Simply load the module after loading Highlight.js.  You'll use the minified version found in the `dist` directory.  This module is just a CDN build of the language, so it will register itself as the Javascript is loaded.
+Simply load the module after loading Highlight.js.
+It is possible to use the minified version found in the `dist` directory.  This module is just a CDN build of the language, so it will register itself as the Javascript is loaded.
 
 ```html
 <script type="text/javascript" src="/path/to/highlight.min.js"></script>
@@ -40,13 +41,14 @@ hljs.highlightAll();
 
 ## Development
 
-To provide a deterministic build system we rely on Docker.
+Start a local development server via `python3 -m http.server` and access the `test.html` file on <http://127.0.0.1:8000/test/test.html>.
+After this modify the `src/sclang.js` file and reload the browser.
+
+After the adjustments have been made, it is necessary to build a minified version before it can be published.
 
 ### How to build
 
-The build process is rather complicated, take a look at <https://github.com/highlightjs/highlight.js/blob/main/extra/3RD_PARTY_QUICK_START.md>.
-
-The docker container allows to automate the necessary setup.
+As the build process is rather complex (see <https://github.com/highlightjs/highlight.js/blob/main/extra/3RD_PARTY_QUICK_START.md>) this repository relies on Docker to create deterministic builds on any platform.
 
 ```shell
 docker build -t sc-highlightjs .
@@ -54,12 +56,16 @@ docker build -t sc-highlightjs .
 docker run --volume "$(pwd)/dist:/highlightjs/sclang/dist" sc-highlightjs
 ```
 
+Alternatively use `make build-docker`.
+
 ### How to run tests
 
 ```shell
 docker build -t sc-highlightjs .
 docker run sc-highlightjs npm run test
 ```
+
+Alternatively use `make test-docker`.
 
 ## License
 
