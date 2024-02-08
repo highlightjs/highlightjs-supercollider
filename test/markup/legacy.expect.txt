@@ -1,0 +1,95 @@
+<span class="hljs-comment">/* Code examples */</span>
+
+<span class="hljs-comment">// 60Hz Gabber Rave 1995</span>
+<span class="hljs-type">Server</span>.default.boot;
+
+(
+<span class="hljs-type">SynthDef</span>(<span class="hljs-string">\gabberkick</span>, {
+	<span class="hljs-keyword">var</span> snd, freq, high, lfo;
+	freq = <span class="hljs-string">\freq</span>.kr(<span class="hljs-number">440</span>) * (<span class="hljs-type">Env</span>.perc(<span class="hljs-number">0.001</span>, <span class="hljs-number">0.08</span>, <span class="hljs-string">curve:</span> -<span class="hljs-number">1</span>).ar * <span class="hljs-number">48</span> * <span class="hljs-string">\bend</span>.kr(<span class="hljs-number">1</span>)).midiratio;
+	snd = <span class="hljs-type">Saw</span>.ar(freq);
+	snd = (snd * <span class="hljs-number">100</span>).tanh + ((snd.sign - snd) * -<span class="hljs-number">8</span>.dbamp);
+	high = <span class="hljs-type">HPF</span>.ar(snd, <span class="hljs-number">300</span>);
+	lfo = <span class="hljs-type">SinOsc</span>.ar(<span class="hljs-number">8</span>, [<span class="hljs-number">0</span>, <span class="hljs-number">0.5pi</span>]).range(<span class="hljs-number">0</span>, <span class="hljs-number">0.01</span>);
+	high = high.dup(<span class="hljs-number">2</span>) + (<span class="hljs-type">DelayC</span>.ar(high, <span class="hljs-number">0.01</span>, lfo) * -<span class="hljs-number">2</span>.dbamp);
+	snd = <span class="hljs-type">LPF</span>.ar(snd, <span class="hljs-number">100</span>).dup(<span class="hljs-number">2</span>) + high;
+	snd = <span class="hljs-type">RLPF</span>.ar(snd, <span class="hljs-number">7000</span>, <span class="hljs-number">2</span>);
+	snd = <span class="hljs-type">BPeakEQ</span>.ar(snd, <span class="hljs-string">\ffreq</span>.kr(<span class="hljs-number">3000</span>) * <span class="hljs-type">XLine</span>.kr(<span class="hljs-number">1</span>, <span class="hljs-number">0.8</span>, <span class="hljs-number">0.3</span>), <span class="hljs-number">0.5</span>, <span class="hljs-number">15</span>);
+	snd = snd * <span class="hljs-type">Env</span>.asr(<span class="hljs-number">0.001</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0.05</span>).ar(<span class="hljs-number">2</span>, <span class="hljs-string">\gate</span>.kr(<span class="hljs-number">1</span>));
+	<span class="hljs-type">Out</span>.ar(<span class="hljs-string">\out</span>.kr(<span class="hljs-number">0</span>), snd * <span class="hljs-string">\amp</span>.kr(<span class="hljs-number">0.1</span>));
+}).add;
+
+<span class="hljs-type">SynthDef</span>(<span class="hljs-string">\hoover</span>, {
+	<span class="hljs-keyword">var</span> snd, freq, bw, delay, decay;
+	freq = <span class="hljs-string">\freq</span>.kr(<span class="hljs-number">440</span>);
+	freq = freq * <span class="hljs-type">Env</span>([-<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">0.1</span>, <span class="hljs-number">1.7</span>], [<span class="hljs-string">\lin</span>, -<span class="hljs-number">4</span>]).kr.midiratio;
+	bw = <span class="hljs-number">1.035</span>;
+	snd = { <span class="hljs-type">DelayN</span>.ar(<span class="hljs-type">Saw</span>.ar(freq * <span class="hljs-type">ExpRand</span>(bw, <span class="hljs-number">1</span> / bw)) + <span class="hljs-type">Saw</span>.ar(freq * <span class="hljs-number">0.5</span> * <span class="hljs-type">ExpRand</span>(bw, <span class="hljs-number">1</span> / bw)), <span class="hljs-number">0.01</span>, <span class="hljs-type">Rand</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0.01</span>)) }.dup(<span class="hljs-number">20</span>);
+	snd = (<span class="hljs-type">Splay</span>.ar(snd) * <span class="hljs-number">3</span>).atan;
+	snd = snd * <span class="hljs-type">Env</span>.asr(<span class="hljs-number">0.01</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>).kr(<span class="hljs-number">0</span>, <span class="hljs-string">\gate</span>.kr(<span class="hljs-number">1</span>));
+	snd = <span class="hljs-type">FreeVerb2</span>.ar(snd[<span class="hljs-number">0</span>], snd[<span class="hljs-number">1</span>], <span class="hljs-number">0.3</span>, <span class="hljs-number">0.9</span>);
+	snd = snd * <span class="hljs-type">Env</span>.asr(<span class="hljs-number">0</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>).kr(<span class="hljs-number">2</span>, <span class="hljs-string">\gate</span>.kr(<span class="hljs-number">1</span>));
+	<span class="hljs-type">Out</span>.ar(<span class="hljs-string">\out</span>.kr(<span class="hljs-number">0</span>), snd * <span class="hljs-string">\amp</span>.kr(<span class="hljs-number">0.1</span>));
+}).add;
+)
+
+(
+<span class="hljs-keyword">var</span> durations;
+durations = [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">3</span>/<span class="hljs-number">4</span>, <span class="hljs-number">1</span>/<span class="hljs-number">4</span>, <span class="hljs-number">1</span>/<span class="hljs-number">2</span>, <span class="hljs-number">3</span>/<span class="hljs-number">4</span>, <span class="hljs-number">1</span>/<span class="hljs-number">4</span>, <span class="hljs-number">1</span>/<span class="hljs-number">2</span>];
+<span class="hljs-type">Ppar</span>([
+	<span class="hljs-type">Pbind</span>(*[
+		<span class="hljs-string">instrument:</span> <span class="hljs-string">\gabberkick</span>,
+		<span class="hljs-string">amp:</span> -<span class="hljs-number">23</span>.dbamp,
+		<span class="hljs-string">freq:</span> <span class="hljs-number">60</span>,
+		<span class="hljs-string">legato:</span> <span class="hljs-number">0.8</span>,
+		<span class="hljs-string">ffreq:</span> <span class="hljs-type">Pseq</span>((<span class="hljs-number">0</span>..(durations.size * <span class="hljs-number">4</span> - <span class="hljs-number">1</span>)).normalize, <span class="hljs-built_in">inf</span>).linexp(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">100</span>, <span class="hljs-number">4000</span>),
+		<span class="hljs-string">dur:</span> <span class="hljs-type">Pseq</span>(durations, <span class="hljs-built_in">inf</span>),
+		<span class="hljs-string">bend:</span> <span class="hljs-type">Pfuncn</span>({ |x| if(x &lt; (<span class="hljs-number">1</span>/<span class="hljs-number">2</span>), <span class="hljs-number">0.4</span>, <span class="hljs-number">1</span>) }, <span class="hljs-built_in">inf</span>) &lt;&gt; <span class="hljs-type">Pkey</span>(<span class="hljs-string">\dur</span>),
+	]),
+	<span class="hljs-type">Pbind</span>(*[
+		<span class="hljs-string">instrument:</span> <span class="hljs-string">\hoover</span>,
+		<span class="hljs-string">amp:</span> -<span class="hljs-number">20</span>.dbamp,
+		<span class="hljs-string">midinote:</span> <span class="hljs-number">74</span>,
+		<span class="hljs-string">dur:</span> durations.sum * <span class="hljs-number">2</span>,
+		<span class="hljs-string">sustain:</span> <span class="hljs-number">7</span>,
+	])
+]).play(<span class="hljs-type">TempoClock</span>(<span class="hljs-number">210</span> / <span class="hljs-number">60</span>));
+)
+
+<span class="hljs-comment">/* Using environment variables */</span>
+<span class="hljs-title">~func</span> = { |a| a.postln };
+<span class="hljs-title">~eval</span> = <span class="hljs-title">~func</span>.(<span class="hljs-number">3</span>);
+
+<span class="hljs-comment">/* Example class file */</span>
+<span class="hljs-type">Foo</span> : <span class="hljs-type">Bar</span> {
+	<span class="hljs-keyword">classvar</span> a, b;
+	<span class="hljs-keyword">var</span> &lt;&gt;c, &lt;d, &gt;e;
+	<span class="hljs-keyword">const</span> f = <span class="hljs-number">3</span>, g = <span class="hljs-literal">$a</span>;
+
+	*new { <span class="hljs-keyword">arg</span> inC, inD, inE;
+		^<span class="hljs-keyword">super</span>.newCopyArgs(inC, inD, inE)
+	}
+
+	*fizz { |arg1, arg2|
+		^arg1 * arg2 + a
+	}
+
+	buzz { |arg1, arg2|
+		<span class="hljs-keyword">var</span> var1 = [arg1, arg2, b].collect(_ + <span class="hljs-number">4</span>);
+		^var1.collect(_.sqrt)
+	}
+
+	aMethod { ^<span class="hljs-built_in">thisMethod</span> }
+}
+
+<span class="hljs-comment">/* Core library excerpt */</span>
+<span class="hljs-type">SimpleNumber</span> : <span class="hljs-type">Number</span> {
+	*new { ^<span class="hljs-keyword">this</span>.shouldNotImplement(<span class="hljs-built_in">thisMethod</span>) }
+	isValidUGenInput { ^<span class="hljs-keyword">this</span>.isNaN.not }
+	numChannels { ^<span class="hljs-number">1</span> }
+	magnitude { ^<span class="hljs-keyword">this</span>.abs }
+	angle { ^if(<span class="hljs-keyword">this</span> &gt;= <span class="hljs-number">0</span>) { <span class="hljs-number">0.0</span> } { <span class="hljs-number">pi</span> } }
+	neg { <span class="hljs-meta">_Neg</span>; ^<span class="hljs-keyword">this</span>.primitiveFailed }
+	bitNot { <span class="hljs-meta">_BitNot</span>; ^<span class="hljs-keyword">this</span>.primitiveFailed }
+	<span class="hljs-comment">/* ... */</span>
+}

@@ -1,0 +1,9 @@
+/* begin comment at LEVEL 0
+    /*
+      multiline nested comment LEVEL 1
+    */
+    "still comment level 0".postln;
+    /*
+        another multiline nested comment LEVEL 1
+    */
+end comment at LEVEL 0 */
